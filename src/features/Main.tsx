@@ -7,8 +7,8 @@ import {
   getSearchText,
   getStatus,
   getError,
-  //getImages,
-  searchImages,
+  getImages,
+  getInitialImages,
 } from "./search/SearchSlice";
 
 function Main() {
@@ -17,117 +17,34 @@ function Main() {
   const status = useSelector(getStatus);
   const searchText = useSelector(getSearchText);
   const error = useSelector(getError);
- // const imgItems = useSelector(getImages);
+  const imgItems = useSelector(getImages);
   let initialLoading: boolean = false;
   let searchingPhotos: boolean = false;
   let retreivedPhotos: boolean = false;
 
   useEffect(() => {
     if (status === "empty") {
-      dispatch(searchImages("hello"));
+      dispatch(getInitialImages());
     }
   }, [status, dispatch]);
 
-  if (status === "loading" && !searchText) {
-    initialLoading = true;
-    mainContent = (
-      <Loaders />
-
-      //   <div>
-      //     <Search
-      //       initialLoad={true}
-      //       searchingPhotos={false}
-      //       retrievedPhotos={false}
-      //       errorMessage={""}
-      //       searchText={""}
-      //     />
-      //     <Loaders />
-      //   </div>
-    );
-  } else if (status === "loading" && searchText) {
-    searchingPhotos = true;
-    mainContent = (
-      <Loaders />
-
-      //   <div>
-      //     <Search
-      //       initialLoad={false}
-      //       searchingPhotos={true}
-      //       retrievedPhotos={false}
-      //       errorMessage={""}
-      //       searchText={searchText}
-      //     />
-      //     <Loaders />
-      //   </div>
-    );
+  if (status === "loading") {
+    searchText ? (searchingPhotos = true) : (initialLoading = true);
+    mainContent = <Loaders />;
   }
 
   if (status === "succeeded") {
     retreivedPhotos = true;
-    mainContent = (
-      <ImageList />
-
-      //   <div>
-      //     <Search
-      //       initialLoad={false}
-      //       searchingPhotos={false}
-      //       retrievedPhotos={true}
-      //       errorMessage={""}
-      //       searchText={""}
-      //     />
-      //     <ImageList />
-      //   </div>
-    );
+    mainContent = <ImageList images={imgItems} />;
   }
-  //   else if (status === "succeeded" && searchText) {
-  //     mainContent = (
-  //       <div>
-  //         <Search
-  //           initialLoad={false}
-  //           searchingPhotos={false}
-  //           retrievedPhotos={true}
-  //           errorMessage={""}
-  //           searchText={searchText}
-  //         />
-  //         <ImageList />
-  //       </div>
-  //     );
-  //   }
 
   if (status === "failed") {
     initialLoading = false;
     searchingPhotos = true;
     retreivedPhotos = false;
-    mainContent = (
-      <Loaders />
-
-      //   <div>
-      //     <Search
-      //       initialLoad={false}
-      //       searchingPhotos={false}
-      //       retrievedPhotos={false}
-      //       errorMessage={error}
-      //       searchText={''}
-      //     />
-      //     <Loaders />
-      //   </div>
-    );
+    mainContent = <Loaders />;
   }
 
-  //   else if (status === "failed" && searchText) {
-  //     mainContent = (
-  //       <div>
-  //         <Search
-  //           initialLoad={false}
-  //           searchingPhotos={true}
-  //           retrievedPhotos={false}
-  //           errorMessage={error}
-  //           searchText={searchText}
-  //         />
-  //         <Loaders />
-  //       </div>
-  //     );
-  //   }
   return (
     <div>
       <Search
@@ -135,7 +52,7 @@ function Main() {
         searchingPhotos={searchingPhotos}
         retrievedPhotos={retreivedPhotos}
         errorMessage={error}
-       />
+      />
 
       {mainContent}
     </div>

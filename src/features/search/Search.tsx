@@ -3,19 +3,23 @@ import { ArrowBack, SearchOutlined } from "@material-ui/icons";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Search.module.css";
-import { searchImages, setSearchText, getSearchText } from "./SearchSlice";
+import {
+  searchImages,
+  setSearchText,
+  getSearchText, //setDefaultStatus
+} from "./SearchSlice";
 
 interface searchProps {
   initialLoad: boolean;
   searchingPhotos: boolean;
-   retrievedPhotos: boolean;
+  retrievedPhotos: boolean;
   errorMessage: string;
 }
 
 function Search({
   initialLoad,
   searchingPhotos,
-   retrievedPhotos,
+  retrievedPhotos,
   errorMessage,
 }: searchProps) {
   let searchContent;
@@ -25,7 +29,7 @@ function Search({
 
   const setText = (text: string) => {
     setfeedbackText(text);
-    // dispatch(setDefaultStatus({ status: "empty", text: null }));
+    //  dispatch(setDefaultStatus({ status: "empty", text: null }));
 
     setTimeout(() => {
       setfeedbackText("");
@@ -89,8 +93,9 @@ function Search({
         Search Results for <span> " {searchText} " </span>
       </h2>
     );
-  } else{
-      searchContent = (   <div className={styles.search_box}>
+  } else {
+    searchContent = (
+      <div className={styles.search_box}>
         <IconButton
           aria-label="search"
           onClick={handleBtnClick}
@@ -103,15 +108,14 @@ function Search({
           placeholder="Search for photo"
           onInput={handleChange}
         />
-      </div>)
+      </div>
+    );
   }
   return (
     <div className={styles.search_holder}>
-    
       {searchContent}
-      <h4> {feedbackText} </h4> 
+      <h4> {feedbackText} </h4>
       <h4> {errorMessage} </h4>
-    
     </div>
   );
 }

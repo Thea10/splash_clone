@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.search_holder :is(h2, h3, h4) {
+.search_holder h2, .search_holder h3, .search-holder h4 {
   color: #1b1329;
   margin-bottom: 0.2rem;
   margin-top: 0;
@@ -16,7 +16,7 @@
   justify-content: center;
 }
 
-.search_holder :is(span) {
+.search_holder span {
   color: rgba(53, 47, 68, 0.6);
   text-transform: capitalize;
   margin-left: 1rem;
@@ -54,7 +54,6 @@
 .placeholder_loader{
     background:#f5f5f5 ;
     opacity: 0.7;
-    min-height: 200px;
 }
 
  .mask{
@@ -66,22 +65,32 @@
     background:linear-gradient(
         to right,
         #f7f5f5 10%,
-        rgb(27 19 41 / 61%) 20%,
+        rgba(27, 19, 41, 0.61) 20%,
         #dddddd 30%
       );
       background-size: 500px;
 }
 
- .mask:is(.name){
+ .mask .name{
     width: 45%;
 }
 
- .mask:is(.location){
+ .mask .location{
     width: 20%;
       max-width: 50%;
 }
 
 @keyframes shimmerLoader{
+    0%{
+      background-position: -50% 0;
+      width: 70%;
+    }
+    100%{
+      background-position: 50% 0;
+    }
+  }
+
+  @-webkit-keyframes shimmerLoader{
     0%{
       background-position: -50% 0;
       width: 70%;
