@@ -65,8 +65,7 @@ export const searchSlice = createSlice({
     storeImages: (state, action: PayloadAction<any[]>) => {
       let { payload } = action;
       state.imageList.push(payload);
-      console.log(state.imageList);
-    },
+     },
     setSearchText: (state, action: PayloadAction<string>) => {
       let { payload } = action;
       state.searchText = payload;
@@ -85,7 +84,7 @@ export const searchSlice = createSlice({
       .addCase(getInitialImages.fulfilled, (state, { payload }) => {
         if (Array.isArray(payload)) {
           state.status = "succeeded";
-          console.log(payload);
+          
           state.imageList = payload;
         } else {
           state.status = "failed";
@@ -102,8 +101,7 @@ export const searchSlice = createSlice({
       .addCase(searchImages.fulfilled, (state, { payload }) => {
         if (Array.isArray(payload)) {
           state.status = "succeeded";
-          console.log(payload);
-          state.imageList = payload;
+           state.imageList = payload;
         } else {
           state.status = "failed";
           state.error = payload;

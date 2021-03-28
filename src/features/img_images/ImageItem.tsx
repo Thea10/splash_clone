@@ -104,14 +104,14 @@ function ImageItem({ currentImage, index, imageList }: singleImageProps) {
         </Tooltip>
 
         <Tooltip title="Portfolio">
-          <Link href={user.portfolio_url}>
+          <Link target="_blank" href={user.portfolio_url}>
             <LinkOutlined />
           </Link>
         </Tooltip>
 
         <div className={`${imgStyle.img_actions}`}>
           <Tooltip title="Download">
-            <Link href={links.download}>
+            <Link  target="_blank"  href={links.download}>
               <IconButton>
                 <ArrowDownwardRounded />
               </IconButton>
